@@ -1,0 +1,32 @@
+{
+  "name": "audio-video-admin",
+  "version": "0.0.1",
+  "description": "Audio/Video admin editor web app, suits up in Material Design.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crossdjinn/audio-video-admin"
+  },
+  "author": "Cross DJinn",
+  "license": "MIT",
+  "homepage": "https://github.com/crossdjinn/audio-video-admin",
+  "devDependencies": {
+    "nodemon": "^1.12.5"
+  },
+  "dependencies": {
+    "cookie": "^0.3.1",
+    "express": "^4.16.2",
+    "express-list-endpoints": "^3.0.1",
+    "express-session": "^1.15.6",
+    "express-socket.io-session": "^1.3.2",
+    "fs": "0.0.1-security",
+    "geoip-lite": "^1.2.1",
+    "http": "0.0.0",
+    "mongoose": "^4.13.6",
+    "pug": "^2.0.0-rc.4",
+    "socket.io": "^2.0.4"
+  }
+}

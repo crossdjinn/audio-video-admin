@@ -1,0 +1,6 @@
+ul#routes(layout-padding)
+    for route in routes
+        li
+            i=route.methods
+            a(href=route.path)
+                h4=route.path

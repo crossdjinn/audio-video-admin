@@ -1,0 +1,49 @@
+<div class="container-fluid" ng-controller="audioNewController">
+    <div class="row">
+        <md-card>
+            <form name="newAudio" ng-submit="add()">
+                <md-card-content>
+                    <div layout="row" layout-align="space-between center">
+                        <md-input-container>
+                            <label>Title</label>
+                            <input required ng-model="entry.name"/>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row">
+                        <md-input-container>
+                            <label>Status</label>
+                            <md-select ng-model="entry.type" placeholder="Type">
+                                <md-option value="plain" selected>Plain audio format</md-option>
+                                <md-option value="SoundCloud">SoundCloud</md-option>
+                                <md-option value="MixCloud">MixCloud</md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container style="width: 100%" ng-show="entry.type === 'SoundCloud'">
+                            <label>URL</label>
+                            <input required ng-model="entry.trackUrl"/>
+                        </md-input-container>
+
+                        <md-input-container ng-if="entry.trackId">
+                            <label>Track ID</label>
+                            <input required disabled ng-model="entry.trackId"/>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row" layout-align="center">
+                        <md-button class="md-raised" ng-if="entry.trackUrl" ng-click="getId()">Create Widget</md-button>
+                    </div>
+
+                    <hr>
+
+                    <div layout="row" layout-align="center" id="soundcloud"></div>
+
+                    <div layout="row" style="width: 100%;text-align: right">
+                        <md-button class="md-raised" type="submit">Add</md-button>
+                    </div>
+                </md-card-content>
+            </form>
+        </md-card>
+    </div>
+</div>

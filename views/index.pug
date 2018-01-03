@@ -1,0 +1,94 @@
+html(lang="en")
+    head
+        title=name
+
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", type="text/css", href="/styles/style.css")
+        link(rel="stylesheet", type="text/css", href="/bower_components/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", type="text/css", href="/bower_components/angular-material/angular-material.min.css")
+        link(rel="stylesheet", type="text/css", href="/bower_components/flag-icon-css/css/flag-icon.min.css")
+
+        script(src="/bower_components/socket.io-client/dist/socket.io.slim.js")
+        script(src="/bower_components/jquery/dist/jquery.min.js")
+
+        script(src="/bower_components/angular/angular.min.js")
+        script(src="/bower_components/angular-route/angular-route.min.js")
+        script(src="/bower_components/angular-resource/angular-resource.min.js")
+        script(src="/bower_components/angular-cookies/angular-cookies.min.js")
+        script(src="/bower_components/angular-animate/angular-animate.min.js")
+        script(src="/bower_components/angular-aria/angular-aria.min.js")
+        script(src="/bower_components/angular-messages/angular-messages.min.js")
+
+        script(src="/bower_components/angular-loading-bar/build/loading-bar.min.js")
+
+        script(src="/bower_components/angular-material/angular-material.min.js")
+
+        script(src="/scripts/ua-parser.min.js")
+
+        script(src="/scripts/index.js")
+
+        script(src="/scripts/app.module.js")
+        script(src="/scripts/app.config.js")
+
+        script(src="/scripts/home/module.js")
+        script(src="/scripts/home/component.js")
+
+        script(src="/scripts/audio/list.module.js")
+        script(src="/scripts/audio/list.component.js")
+        script(src="/scripts/audio/detail.module.js")
+        script(src="/scripts/audio/detail.component.js")
+        script(src="/scripts/audio/new.module.js")
+        script(src="/scripts/audio/new.component.js")
+
+        script(src="//cdn.headwayapp.co/widget.js")
+        script(type="text/javascript", src="//w.soundcloud.com/player/api.js")
+
+    body(onload="bodyLoaded();", ng-app="ngApp")
+        a(href="/#!/audio/new", ng-controller="MenuCtrl")
+            md-button.md-accent.md-fab.md-fab-bottom-right(ng-hide="$route.current.activetab === 'audioNew'")
+                i.material-icons create
+
+        div(ng-controller="AppCtrl", layout="column", ng-cloak, style="height: 100%")
+            section(layout="row", flex)
+                md-sidenav.md-sidenav-left(md-component-id="left", md-whiteframe="5", md-is-locked-open="$mdMedia('gt-sm')", md-swipe-left="toggleLeft()")
+                    md-toolbar.md-theme-indigo.md-hue-2
+                        h1.md-toolbar-tools=" v" + version
+
+                    md-content
+                        div(flex)
+                            md-list.menu-list(ng-controller="MenuCtrl" ng-click="toggleLeft()")
+                                a(href="#!/")
+                                    md-list-item(ng-class="{activeTab: $route.current.activetab === 'home'}")
+                                        i.material-icons open_in_new
+                                        p(layout-padding) API routes
+                                md-subheader.md-no-sticky Audio
+                                    a(href="#!/audio/new")
+                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'audioNew'}")
+                                            i.material-icons create
+                                            p(layout-padding) New
+                                    a(href="#!/audio/list")
+                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'audioList'}")
+                                            i.material-icons format_list_numbered
+                                            p(layout-padding) All
+                                md-list-item
+                                    i.material-icons cast_connected
+                                    p#connectCounter(layout-padding)
+                                div#users
+
+
+
+                md-content(flex)
+                    md-toolbar.md-theme-indigo.md-hue-2(md-whiteframe="5")
+                        div.md-toolbar-tools
+                            md-button.md-icon-button(ng-click="toggleLeft()", hide-gt-sm)
+                                i.material-icons menu
+
+                            h1.md-toolbar-tools(flex, md-truncate, ng-controller="MenuCtrl") {{$route.current.activename}}
+
+                            i#headwayapp
+
+                    md-content
+                        div(layout="column", layout-align="top center")
+
+                            div(ng-view, style="width: 100%")
+
