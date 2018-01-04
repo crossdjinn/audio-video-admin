@@ -3,10 +3,18 @@ angularApp.controller('audioDetailController',
         $scope.entry = Audio.get({id: $routeParams.id}, function(data) {
             $scope.audio = data;
 
-            var element = document.getElementById("soundcloud");
-            var newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/' + $scope.audio.trackId + '"></iframe>';
+            var element = document.getElementById("widget");
 
-            element.insertAdjacentHTML('afterend', newElement);
+            if($scope.audio.type[0] === "SoundCloud"){
+                var newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/' + $scope.audio.trackId + '"></iframe>';
+
+                element.insertAdjacentHTML('afterend', newElement);
+            } else if($scope.audio.type[0] === "MixCloud"){
+                var newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $scope.audio.trackId + '" frameborder="0"></iframe>';
+
+                element.insertAdjacentHTML('afterend', newElement);
+            }
+
         });
 
         $scope.getId = function() {

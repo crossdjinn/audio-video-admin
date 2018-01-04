@@ -43,6 +43,14 @@
     position: fixed;
 }
 
+.mixCloudIcon {
+    webkit-transform:scale(1.33); /* Safari and Chrome */
+    -moz-transform:scale(1.33); /* Firefox */
+    -ms-transform:scale(1.33); /* IE 9 */
+    -o-transform:scale(1.33); /* Opera */
+    transform:scale(1.33);
+}
+
 #connectCounter{
     font-size: 1.2em;
 }

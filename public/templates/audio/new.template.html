@@ -20,7 +20,7 @@
                             </md-select>
                         </md-input-container>
 
-                        <md-input-container style="width: 100%" ng-show="entry.type === 'SoundCloud'">
+                        <md-input-container style="width: 100%" ng-show="entry.type === 'SoundCloud'|| entry.type === 'MixCloud'">
                             <label>URL</label>
                             <input required ng-model="entry.trackUrl"/>
                         </md-input-container>
@@ -32,12 +32,13 @@
                     </div>
 
                     <div layout="row" layout-align="center">
-                        <md-button class="md-raised" ng-if="entry.trackUrl" ng-click="getId()">Create Widget</md-button>
+                        <md-button class="md-raised" ng-if="entry.trackUrl" ng-click="getWidget()">Create Widget</md-button>
                     </div>
 
                     <hr>
 
                     <div layout="row" layout-align="center" id="soundcloud"></div>
+                    <div layout="row" layout-align="center" id="mixcloud"></div>
 
                     <div layout="row" style="width: 100%;text-align: right">
                         <md-button class="md-raised" type="submit">Add</md-button>
