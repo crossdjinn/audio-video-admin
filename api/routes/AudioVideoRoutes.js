@@ -4,6 +4,7 @@ module.exports = function(app) {
         audio = require('../controllers/AudioController'),
         soundcloud = require('../controllers/SoundCloudController'),
         availableRoutes = require('express-list-endpoints'),
+        id3 = require('id3js'),
         config;
 
     // TODO: separate logic of home
@@ -19,6 +20,28 @@ module.exports = function(app) {
                     version: config.version
             })
         });
+    });
+
+
+
+    app.post('/upload', function(req, res) {
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
+
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        var sampleFile = req.files.sampleFile;
+
+        //tagID3.read(fileBuffer, function(tags) {
+            // Use the mv() method to place the file somewhere on your server
+            sampleFile.mv('uploads/' + sampleFile.name, function(err) {
+                if (err)
+                    return res.status(500).send(err);
+
+                var file = 'uploads/' + req.files.sampleFile.name || new Buffer('uploads/' + req.files.sampleFile.name);
+
+                res.send("done");
+            })
+        //});
     });
 
     app.route('/api/soundcloud')

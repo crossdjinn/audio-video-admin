@@ -31,6 +31,12 @@
                         </md-input-container>
                     </div>
 
+
+
+
+
+
+
                     <div layout="row" layout-align="center">
                         <md-button class="md-raised" ng-if="entry.trackUrl" ng-click="getWidget()">Create Widget</md-button>
                     </div>
@@ -45,6 +51,18 @@
                     </div>
                 </md-card-content>
             </form>
+
+
+            <form ng-show="entry.type === 'plain'"
+                  ref='uploadForm'
+                  id='uploadForm'
+                  action='http://localhost:3000/upload'
+                  method='post'
+                  encType="multipart/form-data">
+                <input type="file" name="sampleFile" />
+                <input type='submit' value='Upload!' />
+            </form>
+
         </md-card>
     </div>
 </div>

@@ -14,9 +14,12 @@ var express = require('express'),
         resave: true,
         saveUninitialized: true
     }),
-    sharedSession = require("express-socket.io-session");
+    sharedSession = require("express-socket.io-session"),
+    fileUpload = require('express-fileupload');
+
 
 app.use(session);
+app.use(fileUpload());
 
 io.use(sharedSession(session, {
     autoSave:true
