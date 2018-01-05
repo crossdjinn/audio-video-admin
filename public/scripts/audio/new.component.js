@@ -1,6 +1,8 @@
 angularApp.controller('audioNewController',
-    function audioNewController($scope, $routeParams, $mdToast, $http, Audio) {
+    function audioNewController($scope, $routeParams, $mdToast, $http, $routeParams, Audio) {
         $scope.entry = new Audio();
+
+        $scope.entry.trackUrl = $routeParams.url;
 
         $scope.getWidget = function() {
 
@@ -31,6 +33,28 @@ angularApp.controller('audioNewController',
                 var newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $scope.entry.trackId + '" frameborder="0"></iframe>';
 
                 element.insertAdjacentHTML('afterend', newElement);
+            } else if($scope.entry.type === "remote"){
+                var audio = document.getElementById('audio');
+
+                var source = document.getElementById('audioSource');
+                source.src = $scope.entry.trackUrl;
+
+                audio.volume=0.5;
+                audio.load(); //call this to just preload the audio without playing
+                audio.play(); //call this to play the song right away
+                audio.style.visibility = "visible";
+
+            } else if($scope.entry.type === "local"){
+                var audio = document.getElementById('audio');
+
+                var source = document.getElementById('audioSource');
+                source.src = "http://" + window.location.host + $scope.entry.trackUrl;
+
+                audio.volume=0.5;
+                audio.load(); //call this to just preload the audio without playing
+                audio.play(); //call this to play the song right away
+
+                audio.style.visibility = "visible";
             }
 
 

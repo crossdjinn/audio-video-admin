@@ -14,13 +14,14 @@
                         <md-input-container>
                             <label>Status</label>
                             <md-select ng-model="entry.type" placeholder="Type">
-                                <md-option value="plain" selected>Plain audio format</md-option>
+                                <md-option value="local" selected>local</md-option>
+                                <md-option value="remote">remote</md-option>
                                 <md-option value="SoundCloud">SoundCloud</md-option>
                                 <md-option value="MixCloud">MixCloud</md-option>
                             </md-select>
                         </md-input-container>
 
-                        <md-input-container style="width: 100%" ng-show="entry.type === 'SoundCloud'|| entry.type === 'MixCloud'">
+                        <md-input-container style="width: 100%" ng-show="entry.type === 'SoundCloud' || entry.type === 'MixCloud' || entry.type === 'remote' || (entry.type === 'local' && entry.trackUrl)">
                             <label>URL</label>
                             <input required ng-model="entry.trackUrl"/>
                         </md-input-container>
@@ -43,6 +44,17 @@
 
                     <hr>
 
+
+                    <div layout="row" layout-align="center" id="remote" ng-show="entry.type === 'remote' || entry.type === 'local'">
+
+                        <audio id="audio" controls="" autoplay="" name="media">
+                            <source id="audioSource" type="audio/mpeg">
+                        </audio>
+                        <br>
+                    </div>
+
+
+
                     <div layout="row" layout-align="center" id="soundcloud"></div>
                     <div layout="row" layout-align="center" id="mixcloud"></div>
 
@@ -53,7 +65,7 @@
             </form>
 
 
-            <form ng-show="entry.type === 'plain'"
+            <form
                   ref='uploadForm'
                   id='uploadForm'
                   action='http://localhost:3000/upload'

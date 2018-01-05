@@ -31,15 +31,20 @@ module.exports = function(app) {
         // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
         var sampleFile = req.files.sampleFile;
 
+        var spaceFree = sampleFile.name.replace(/\s/g, '');
+
         //tagID3.read(fileBuffer, function(tags) {
             // Use the mv() method to place the file somewhere on your server
-            sampleFile.mv('uploads/' + sampleFile.name, function(err) {
+            sampleFile.mv('uploads/' + spaceFree, function(err) {
                 if (err)
                     return res.status(500).send(err);
 
-                var file = 'uploads/' + req.files.sampleFile.name || new Buffer('uploads/' + req.files.sampleFile.name);
 
-                res.send("done");
+                res.writeHead(301,
+                    {Location: 'http://localhost:3000/#!/audio/new?url=' + '/uploads/' + spaceFree}
+                );
+                res.end();
+
             })
         //});
     });

@@ -59,6 +59,10 @@
     list-style: none;
 }
 
+#audio {
+    visibility: hidden;
+    width: 100%;
+}
 
 .activeTab{
     color: red;

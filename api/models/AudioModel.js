@@ -25,9 +25,9 @@ var AudioSchema = new Schema({
     type: {
         type: [{
             type: String,
-            enum: ['plain', 'SoundCloud', 'MixCloud']
+            enum: ['local', 'remote', 'SoundCloud', 'MixCloud']
         }],
-        default: ['plain']
+        default: ['local']
     }
 });
 
