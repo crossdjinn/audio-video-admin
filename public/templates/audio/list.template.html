@@ -9,7 +9,9 @@
                         <img width="25" class="remoteIcon" ng-if="audio.type[0] === 'remote'" src="/img/icons/remote.png"/>
                         <img width="25" class="localIcon" ng-if="audio.type[0] === 'local'" src="/img/icons/local.png"/>
                          {{ audio.name }}</h3>
-                    <p>{{ audio.Created_date }}</p>
+                    <p class="tag-list"><i ng-repeat="gen in audio.genres">{{gen}} </i></p>
+                    <p am-time-ago="audio.Created_date"></p>
+
                 </div>
 
 

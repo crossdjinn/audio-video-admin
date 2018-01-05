@@ -1,5 +1,69 @@
 angularApp.controller('audioNewController',
-    function audioNewController($scope, $routeParams, $mdToast, $http, $routeParams, Audio) {
+    function audioNewController($scope, $mdToast, $http, $routeParams, $element, Audio) {
+        $scope.genres = [
+            "8bit",
+            "Ambient",
+            "Asia / Japan",
+            "Bass",
+            "Blues / Jazz",
+            "Break Beat",
+            "Chill",
+            "Cross",
+            "Death",
+            "Deep",
+            "Dirty",
+            "Down Tempo",
+            "Dream",
+            "Drum & Bass",
+            "Drunken",
+            "Dub",
+            "Electro",
+            "Experimental",
+            "Funk",
+            "Hard",
+            "Hawaii",
+            "Healing",
+            "High / Weed",
+            "Hip-Hop / Rap",
+            "House",
+            "Instrumental",
+            "Jam",
+            "Jungle",
+            "Liquid",
+            "Lounge",
+            "LSD / Trip",
+            "Meditation",
+            "Minimalism",
+            "Neuro",
+            "Old",
+            "Psychedelic",
+            "R&B",
+            "Reggae",
+            "Rock",
+            "Singer / Vocal",
+            "Ska",
+            "Soft / Relaxation",
+            "Soundtrack",
+            "Step",
+            "Swing",
+            "Techno",
+            "Trance",
+            "Trap",
+            "Trash",
+            "Tropical",
+            "Underground"
+        ];
+
+        $scope.searchTerm;
+        $scope.clearSearchTerm = function() {
+            $scope.searchTerm = '';
+        };
+        // The md-select directive eats keydown events for some quick select
+        // logic. Since we have a search input here, we don't need that logic.
+        $element.find('input').on('keydown', function(ev) {
+            ev.stopPropagation();
+        });
+
         $scope.entry = new Audio();
 
         $scope.entry.trackUrl = $routeParams.url;

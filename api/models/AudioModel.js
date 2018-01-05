@@ -22,6 +22,11 @@ var AudioSchema = new Schema({
             type: String
         }]
     },
+    genres: {
+        type: [{
+            type: String
+        }]
+    },
     type: {
         type: [{
             type: String,

@@ -3,9 +3,30 @@
         <md-card>
             <md-card-content>
                 <div layout="row">
-                    <md-input-container>
+                    <md-input-container style="width: 100%">
                         <label>Title</label>
                         <input ng-model="entry.name"/>
+                    </md-input-container>
+                </div>
+
+                <div layout="row">
+                    <md-input-container style="width: 100%">
+                        <label>Genres</label>
+                        <md-select ng-model="entry.genres"
+                                   md-on-close="clearSearchTerm()"
+                                   data-md-container-class="selectdemoSelectHeader"
+                                   multiple>
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="searchTerm"
+                                       type="search"
+                                       placeholder="Search..."
+                                       class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-optgroup label="Genres">
+                                <md-option ng-value="genre" ng-repeat="genre in genres |
+  filter:searchTerm">{{genre}}</md-option>
+                            </md-optgroup>
+                        </md-select>
                     </md-input-container>
                 </div>
 
@@ -23,13 +44,10 @@
                 </div>
 
                 <div layout="row" layout-align="center">
-                    <md-button class="md-raised" ng-if="entry.trackUrl" ng-click="getId()">Create Widget</md-button>
+                    <md-button class="md-raised" ng-if="entry.trackUrl" ng-hide="entry.type[0] === 'local'" ng-click="getId()">Create Widget</md-button>
                 </div>
 
-                <hr>
-
-
-                <div layout="row" layout-align="center" id="remote" ng-show="entry.type[0] === 'remote' || entry.type[0] === 'local'">
+                <div layout="row" layout-align="center" id="remote" ng-show="entry.type[0] === 'remote'">
 
                     <audio id="audio" controls="" autoplay="" name="media">
                         <source id="audioSource">
@@ -37,9 +55,28 @@
                     <br>
                 </div>
 
+                <md-slider-container id="zoom">
+                    <span ng-click="zoomReset()">Zoom</span>
+                    <md-slider flex ng-model="zoom" ng-change="zoomChanched()" min="0" max="200" aria-label="zoom" class="md-primary">
+                    </md-slider>
+                </md-slider-container>
+
+                <div id="waveform"></div>
+
+                <md-slider-container id="volume">
+                    <span ng-click="mute()">Volume</span>
+                    <md-slider flex ng-model="volume" ng-change="volumeChanched()" min="0" max="100" aria-label="volume" class="md-primary">
+                    </md-slider>
+                </md-slider-container>
+
+                <div style="text-align: center">
+                    <md-button class="md-primary" ng-click="playPause()">{{playPauseStatus}}</md-button>
+                    <p class="row">
+                        <div id="equalizer" style="margin-top: 10px"></div>
+                    </p>
+                </div>
 
                 <div layout="row" layout-align="center" id="widget"></div>
-
 
                 <div layout="row" layout-align="right">
                     <md-button class="md-accent" ng-click="delete($event)">delete</md-button>

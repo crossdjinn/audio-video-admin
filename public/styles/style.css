@@ -64,9 +64,81 @@
     width: 100%;
 }
 
+#zoom, #volume {
+    visibility: hidden;
+}
+
 .activeTab{
     color: red;
 }
+
+.tag-list {
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left !important;;
+}
+
+.text-right {
+    text-align: right !important;;
+}
+
+.text-justify {
+    text-align: justify !important;;
+}
+
+md-icon[md-font-icon] {
+    font-size: 24px;
+}
+
+md-toolbar.md-toolbar-sm .md-toolbar-tools {
+    max-height: 32px;
+    padding: 6px;
+    font-size: 16px;
+}
+
+md-toolbar.md-toolbar-sm {
+    min-height: 24px;
+}
+.md-player-controls .md-button {
+    min-width: 44px;
+}
+
+
+.selectdemoSelectHeader {
+    /* Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class */ }
+.selectdemoSelectHeader .demo-header-searchbox {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
+    padding: 0; }
+.selectdemoSelectHeader .demo-select-header {
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+    padding-left: 10.667px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto; }
+.selectdemoSelectHeader md-content._md {
+    max-height: 240px; }
+
+
+
+
+
+
+
 
 .menu-list a, .menu-list a:hover, .menu-list a:active, .menu-list a:focus{
     text-decoration: none;
