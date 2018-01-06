@@ -4,7 +4,6 @@ var angularApp = angular.module('ngApp', [
     'ngCookies',
     'ngMaterial',
     'ngMessages',
-    'ng-pagination',
     'angularMoment',
     'angular-loading-bar',
     'audioList',
