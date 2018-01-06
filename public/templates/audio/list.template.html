@@ -1,27 +1,61 @@
 <div class="container-fluid" ng-controller="audioListController">
     <div class="row">
-        <md-list flex>
-            <md-list-item class="md-3-line" ng-repeat="audio in audios | filter:query" ng-href="/#!/audio/{{audio._id}}">
-                <div class="md-list-item-text" layout="column">
-                    <h3>
-                        <img width="25" ng-if="audio.type[0] === 'SoundCloud'" src="/img/icons/soundcloud.png"/>
-                        <img width="25" class="mixCloudIcon" ng-if="audio.type[0] === 'MixCloud'" src="/img/icons/mixcloud.png"/>
-                        <img width="25" class="remoteIcon" ng-if="audio.type[0] === 'remote'" src="/img/icons/remote.png"/>
-                        <img width="25" class="localIcon" ng-if="audio.type[0] === 'local'" src="/img/icons/local.png"/>
-                         {{ audio.name }}</h3>
-                    <p class="tag-list"><i ng-repeat="gen in audio.genres">{{gen}} </i></p>
-                    <p am-time-ago="audio.Created_date"></p>
+        <md-card>
+            <md-card-content style="padding-bottom: 0">
+                    <div layout="row">
+                    <md-input-container style="width: 100%; margin-bottom: 0;">
+                        <label>Search...</label>
+                        <input ng-change="searchUrl()" id="search" ng-model="q"/>
+                    </md-input-container>
 
+                    <md-input-container style="margin-bottom: 0;">
+                        <label>Sorted by</label>
+                        <md-select ng-model="orderItem" ng-change="orderChange(this)" id="orderItem" placeholder="Order by">
+                            <md-option value="Created_date" ng-click="orderRevers(this)" selected><span></span><i class="material-icons orderReversed" ng-if="orderItem === 'Created_date' && orderReversed === false">keyboard_arrow_up</i><i class="material-icons orderReversed" ng-if="orderItem === 'Created_date' && orderReversed === true">keyboard_arrow_down</i> Date</md-option>
+                            <md-option value="name" ng-click="orderRevers(this)"><i class="material-icons orderReversed" ng-if="orderItem === 'name' && orderReversed === false">keyboard_arrow_up</i><i class="material-icons orderReversed" ng-if="orderItem === 'name' && orderReversed === true">keyboard_arrow_down</i> Name</md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container style="margin-bottom: 0;">
+                        <label>Page {{currentPage+1}}/{{numberOfPages()}}</label>
+                        <md-select ng-change="numberOfPages()" ng-model="pageSize" id="pageSize" placeholder="Page {{currentPage+1}}/{{numberOfPages()}}">
+                            <md-option value="4" selected>4</md-option>
+                            <md-option value="15">15</md-option>
+                            <md-option value="30">30</md-option>
+                            <md-option value="100">100</md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
-
-
-            </md-list-item>
-            <md-divider ></md-divider>
-        </md-list>
-
-
-
-
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-list style="padding: 0">
+                <div layout="row" flex layout-align="center">
+                    <md-button flex ng-hide="currentPage === 0" ng-click="currentPage=currentPage-1">
+                        Previous
+                    </md-button>
+                </div>
+                <md-divider ng-hide="currentPage === 0"></md-divider>
+                <md-list-item class="md-3-line" ng-repeat="audio in audios | orderObjectBy:orderItem:orderReversed | startFrom:currentPage*pageSize | filter:q | limitTo:pageSize" ng-click="playerUrl(audio)">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>
+                            <img width="25" ng-if="audio.type[0] === 'SoundCloud'" src="/img/icons/soundcloud.png"/>
+                            <img width="25" class="mixCloudIcon" ng-if="audio.type[0] === 'MixCloud'" src="/img/icons/mixcloud.png"/>
+                            <img width="25" class="remoteIcon" ng-if="audio.type[0] === 'remote'" src="/img/icons/remote.png"/>
+                            <img width="25" class="localIcon" ng-if="audio.type[0] === 'local'" src="/img/icons/local.png"/>
+                            {{ audio.name }}</h3>
+                        <p class="tag-list"><i ng-repeat="gen in audio.genres">{{gen}} </i></p>
+                        <p am-time-ago="audio.Created_date"></p>
+                    </div>
+                </md-list-item>
+                <md-divider ng-hide="currentPage === (numberOfPagesTotal-1)"></md-divider>
+                <div layout="row" flex layout-align="center">
+                    <md-button flex ng-hide="currentPage === (numberOfPagesTotal-1)" ng-click="nextPage()">
+                        Next
+                    </md-button>
+                </div>
+            </md-list>
+        </md-card>
     </div>
 </div>
 
@@ -47,5 +81,5 @@
 
 
 
-    </div>
+    </md-card>
 </div>

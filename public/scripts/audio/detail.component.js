@@ -79,12 +79,19 @@ angularApp.controller('audioDetailController',
                 audio.style.visibility = "visible";
 
             } else if($scope.entry.type[0] === "local"){
+                var audio = document.getElementById('audio');
 
-                //var source = document.getElementById('md-wavesurfer-source');
-                //source.src = "http://" + window.location.host + $scope.audio.trackUrl;
+                var source = document.getElementById('audioSource');
+                source.src = "http://" + window.location.host + $scope.audio.trackUrl;
 
-                var zoom = document.getElementById('zoom');
-                var volume = document.getElementById('volume');
+                audio.volume=0.8;
+                audio.load(); //call this to just preload the audio without playing
+                audio.play(); //call this to play the song right away
+                audio.style.visibility = "visible";
+
+                var zoom = document.getElementById('zoom'),
+                    volume = document.getElementById('volume'),
+                    playPause = document.getElementById('playPause');
 
                 var wavesurfer = WaveSurfer.create({
                     container: '#waveform',
@@ -93,8 +100,6 @@ angularApp.controller('audioDetailController',
                     splitChannels: true,
                     height: 96
                 });
-
-                wavesurfer.load("http://" + window.location.host + $scope.audio.trackUrl);
 
                 wavesurfer.on('ready', function () {
                     var EQ = [
@@ -180,6 +185,7 @@ angularApp.controller('audioDetailController',
 
                     zoom.style.visibility = "visible";
                     volume.style.visibility = "visible";
+                    playPause.style.visibility = "visible";
 
                     $scope.zoom = 0;
 
@@ -194,6 +200,12 @@ angularApp.controller('audioDetailController',
                 $scope.muteStatus = "MUTE";
                 $scope.zoom = 0;
                 $scope.volume = 80;
+
+                $scope.loadLocal = function() {
+                    audio.pause();
+                    $scope.experimentalSelected = true;
+                    wavesurfer.load("http://" + window.location.host + $scope.audio.trackUrl);
+                };
 
                 $scope.volumeChanched = function() {
                     var volumeLevel = Number($scope.volume/100);

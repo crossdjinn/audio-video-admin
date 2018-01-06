@@ -70,7 +70,7 @@ angularApp.controller('audioNewController',
 
         $scope.getWidget = function() {
 
-            if($scope.entry.type[0] === "SoundCloud"){
+            if($scope.entry.type === "SoundCloud"){
                 $http.post("/api/soundcloud/", {'soundcloudURL': $scope.entry.trackUrl}).then(function (data, status, headers, config) {
                     $scope.entry.trackId = data.data.trackID;
 

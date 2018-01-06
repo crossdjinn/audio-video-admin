@@ -15,7 +15,8 @@ config(['$locationProvider', '$routeProvider',
         when('/audio/list', {
             template: '<audio-list></audio-list>',
             activetab: 'audioList',
-            activename: 'All audio files'
+            activename: 'All audio files',
+            reloadOnSearch : false
         }).
         when('/audio/:id', {
             template: '<audio-detail></audio-detail>',

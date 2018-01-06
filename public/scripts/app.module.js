@@ -4,6 +4,7 @@ var angularApp = angular.module('ngApp', [
     'ngCookies',
     'ngMaterial',
     'ngMessages',
+    'ng-pagination',
     'angularMoment',
     'angular-loading-bar',
     'audioList',
@@ -11,6 +12,35 @@ var angularApp = angular.module('ngApp', [
     'audioNew',
     'home'
 ])
+    .factory('audioPlayer', function() {
+
+        // private variable
+        var _dataObj = {};
+
+        // public API
+        return {
+            data: _dataObj
+        };
+    })
+    .filter('startFrom', function() {
+        return function(input, start) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+    })
+    .filter('orderObjectBy', function() {
+        return function (items, field, reverse) {
+            var filtered = [];
+            angular.forEach(items, function (item) {
+                filtered.push(item);
+            });
+            filtered.sort(function (a, b) {
+                return (a[field] > b[field] ? 1 : -1);
+            });
+            if (reverse) filtered.reverse();
+            return filtered;
+        }
+    })
     .factory('Audio', ['$resource',
         function($resource) {
             return $resource('/api/audio/:id', {id: '@_id'}, {
@@ -54,8 +84,52 @@ var angularApp = angular.module('ngApp', [
             }
         };
 })
-    .controller('MenuCtrl', function($scope, $route) {
+    .controller('MenuCtrl', function($scope, $route, $rootScope) {
         $scope.$route = $route;
+        $rootScope.audioData = {};
+
+        var element = document.getElementById("widget");
+
+        var newElement = "";
+
+
+        $scope.$watch("audioData", function() {
+            $scope.audio = $rootScope.audioData || {};
+            var audio = document.getElementById('audioPlayer');
+            var source = document.getElementById('audioPlayerSource');
+
+            audio.pause();
+            audio.style.visibility = "hidden";
+            element.innerHTML = "";
+
+            if($rootScope.audioData.type[0] === "SoundCloud"){
+                newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?auto_play=true&url=https://api.soundcloud.com/tracks/' + $rootScope.audioData.trackId + '"></iframe>';
+                element.innerHTML = newElement;
+            } else if($rootScope.audioData.type[0] === "MixCloud"){
+                newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $rootScope.audioData.trackId + '" frameborder="0"></iframe>';
+                element.innerHTML = newElement;
+            } else if($rootScope.audioData.type[0] === "remote"){
+
+                source.src = $rootScope.audioData.trackUrl;
+
+                audio.volume=0.5;
+                audio.load(); //call this to just preload the audio without playing
+                audio.play(); //call this to play the song right away
+                audio.style.visibility = "visible";
+
+            } else if($rootScope.audioData.type[0] === "local") {
+                var audio = document.getElementById('audioPlayer');
+
+                var source = document.getElementById('audioPlayerSource');
+                source.src = "http://" + window.location.host + $rootScope.audioData.trackUrl;
+
+                audio.volume = 0.8;
+                audio.load(); //call this to just preload the audio without playing
+                audio.play(); //call this to play the song right away
+                audio.style.visibility = "visible";
+            }
+        });
+
 })
     .config(function($mdThemingProvider) {
 

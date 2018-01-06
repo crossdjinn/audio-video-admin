@@ -22,7 +22,6 @@ html(lang="en")
 
         script(src="/bower_components/moment/moment.js")
         script(src="/bower_components/angular-moment/angular-moment.js")
-
         script(src="/bower_components/angular-loading-bar/build/loading-bar.min.js")
 
         script(src="/bower_components/angular-material/angular-material.min.js")
@@ -80,6 +79,12 @@ html(lang="en")
                                     p#connectCounter(layout-padding)
                                 div#users
 
+                                div(ng-show="audio.type[0] === 'local' || audio.type[0] === 'remote'")
+                                    h4(layout-padding) {{audio.name}}
+                                    audio#audioPlayer(ng-if="audio.name", controls="", autoplay="")
+                                        source#audioPlayerSource
+
+                                div(layout="row", layout-align="center", id="widget")
 
 
                 md-content(flex)

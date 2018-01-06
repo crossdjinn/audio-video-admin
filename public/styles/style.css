@@ -59,12 +59,22 @@
     list-style: none;
 }
 
+a:active, a:focus, md-list{
+    outline: 0;
+    border: none;
+    -moz-outline-style: none
+}
+
+#audioPlayer {
+    width: 100%;
+}
+
 #audio {
     visibility: hidden;
     width: 100%;
 }
 
-#zoom, #volume {
+#zoom, #volume, #playPause {
     visibility: hidden;
 }
 
@@ -79,6 +89,32 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.orderReversed {
+     font-size: 11px;
+}
+
+.pagination {
+    margin-top: 16px;
+}
+.pagination .page {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+}
+.pagination .page:hover {
+    color: #ff0000;
+}
+.pagination .page.disabled {
+    color: #c5c5c5;
+}
+.pagination .page.active {
+    color: #d60000;
+}
+
 .text-center {
     text-align: center !important;
 }

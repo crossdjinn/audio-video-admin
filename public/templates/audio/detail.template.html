@@ -47,13 +47,18 @@
                     <md-button class="md-raised" ng-if="entry.trackUrl" ng-hide="entry.type[0] === 'local'" ng-click="getId()">Create Widget</md-button>
                 </div>
 
-                <div layout="row" layout-align="center" id="remote" ng-show="entry.type[0] === 'remote'">
+                <div layout="row" layout-align="center" id="remote" ng-show="entry.type[0] === 'local' || entry.type[0] === 'remote'" ng-hide="experimentalSelected">
 
                     <audio id="audio" controls="" autoplay="" name="media">
                         <source id="audioSource">
                     </audio>
                     <br>
                 </div>
+
+                <div layout="row" layout-align="center">
+                    <md-button class="md-raised" ng-if="entry.type[0] === 'local'" ng-click="loadLocal()" ng-hide="experimentalSelected">Load experimental Widget</md-button>
+                </div>
+
 
                 <md-slider-container id="zoom">
                     <span ng-click="zoomReset()">Zoom</span>
@@ -70,7 +75,7 @@
                 </md-slider-container>
 
                 <div style="text-align: center">
-                    <md-button class="md-primary" ng-click="playPause()">{{playPauseStatus}}</md-button>
+                    <md-button class="md-primary" id="playPause" ng-click="playPause()">{{playPauseStatus}}</md-button>
                     <p class="row">
                         <div id="equalizer" style="margin-top: 10px"></div>
                     </p>
