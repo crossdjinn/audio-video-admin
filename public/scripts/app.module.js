@@ -89,9 +89,7 @@ var angularApp = angular.module('ngApp', [
         $rootScope.audioData = {};
 
         var element = document.getElementById("widget");
-
         var newElement = "";
-
 
         $scope.$watch("audioData", function() {
             $scope.audio = $rootScope.audioData || {};
@@ -134,7 +132,6 @@ var angularApp = angular.module('ngApp', [
     .config(function($mdThemingProvider) {
 
         // Configure a dark theme with primary foreground yellow
-
         //$mdThemingProvider.theme('docs-dark', 'default').dark();
 
 });
