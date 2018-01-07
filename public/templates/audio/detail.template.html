@@ -35,7 +35,7 @@
                         <input required ng-model="entry.trackUrl"/>
                     </md-input-container>
 
-                    <md-input-container ng-show="entry.type === 'SoundCloud' || entry.type === 'MixCloud'">
+                    <md-input-container ng-show="entry.type[0] === 'SoundCloud' || entry.type[0] === 'MixCloud'">
                         <label>Track ID</label>
                         <input required disabled ng-model="entry.trackId"/>
                     </md-input-container>
@@ -45,6 +45,9 @@
                 <div layout="row" layout-align="center">
                     <md-button class="md-raised" ng-if="entry.trackUrl" ng-hide="entry.type[0] === 'local'" ng-click="getId()">Create Widget</md-button>
                 </div>
+
+                <div layout="row" layout-align="center" id="widget"></div>
+
 
                 <div layout="row" layout-align="center" id="remote" ng-show="entry.type[0] === 'local' || entry.type[0] === 'remote'" ng-hide="experimentalSelected">
 
@@ -80,7 +83,6 @@
                     </p>
                 </div>
 
-                <div layout="row" layout-align="center" id="widget"></div>
 
                 <div layout="row" layout-align="right">
                     <md-button class="md-accent" ng-click="delete($event)">delete</md-button>

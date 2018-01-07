@@ -45,6 +45,7 @@ html(lang="en")
         script(src="/scripts/audio/new.component.js")
 
         script(src="//cdn.headwayapp.co/widget.js")
+        script(type="text/javascript", src="//w.soundcloud.com/player/api.js")
 
     body(onload="bodyLoaded();", ng-app="ngApp")
         a(href="/#!/audio/new", ng-controller="MenuCtrl")
@@ -55,7 +56,8 @@ html(lang="en")
             section(layout="row", flex)
                 md-sidenav.md-sidenav-left(md-component-id="left", md-whiteframe="5", md-is-locked-open="$mdMedia('gt-sm')", md-swipe-left="toggleLeft()")
                     md-toolbar.md-theme-indigo.md-hue-2
-                        h1.md-toolbar-tools=" v" + version
+                        a(href="https://github.com/crossdjinn/audio-video-admin/", style="color:white")
+                            h1.md-toolbar-tools=" v" + version
 
                     md-content
                         div(flex)
@@ -83,7 +85,7 @@ html(lang="en")
                                     audio#audioPlayer(ng-if="audio.name", controls="", autoplay="")
                                         source#audioPlayerSource
 
-                                div(layout="row", layout-align="center", id="widget")
+                                div(layout="row", layout-align="center", id="widgetPlayer")
 
 
                 md-content(flex)

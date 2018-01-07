@@ -1,5 +1,5 @@
 angularApp.controller('audioListController',
-    function audioListController($scope, Audio, $cookies, $filter, $element, $routeParams, $location, $rootScope) {
+    function audioListController($scope, Audio, $cookies, $filter, $element, $routeParams, $location, $rootScope, $mdDialog) {
         $scope.audios = Audio.query();
 
         $scope.audios.$promise.then(function(data) {

@@ -58,15 +58,16 @@ angularApp.controller('audioDetailController',
             $scope.audio = data;
 
             var element = document.getElementById("widget");
+            element.innerHTML = "";
 
             if($scope.audio.type[0] === "SoundCloud"){
                 var newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/' + $scope.audio.trackId + '"></iframe>';
 
-                element.insertAdjacentHTML('afterend', newElement);
+                element.innerHTML = newElement;
             } else if($scope.audio.type[0] === "MixCloud"){
                 var newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $scope.audio.trackId + '" frameborder="0"></iframe>';
 
-                element.insertAdjacentHTML('afterend', newElement);
+                element.innerHTML = newElement;
             } else if($scope.audio.type[0] === "remote"){
                 var audio = document.getElementById('audio');
 
@@ -254,10 +255,11 @@ angularApp.controller('audioDetailController',
             $http.post("/api/soundcloud/", {'soundcloudURL': $scope.entry.trackUrl}).then(function (data, status, headers, config) {
                 $scope.entry.trackId = data.data.trackID;
 
-                var element = document.getElementById("soundcloud");
+                var element = document.getElementById("widget");
                 var newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/' + $scope.entry.trackId + '"></iframe>';
 
-                element.insertAdjacentHTML('afterend', newElement);
+                element.innerHTML = "";
+                element.innerHTML = newElement;
             },function (data, status, headers, config) {
                 $mdToast.show(
                     $mdToast.simple()

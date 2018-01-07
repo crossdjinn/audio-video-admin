@@ -51,18 +51,19 @@
     transform:scale(1.33);
 }
 
-#connectCounter{
+#connectCounter {
     font-size: 1.2em;
 }
 
-#routes li{
+#routes li {
     list-style: none;
 }
 
-a:active, a:focus, md-list{
+a, a:hover, a:visited, a:link, a:active, md-list {
     outline: 0;
     border: none;
-    -moz-outline-style: none
+    -moz-outline-style: none;
+    text-decoration: none !important;
 }
 
 #audioPlayer {
@@ -82,12 +83,30 @@ a:active, a:focus, md-list{
     color: red;
 }
 
-.tag-list {
+.list-buttons button, .list-buttons a {
+    margin: 0 !important;
+}
+.list-buttons {
+    position: absolute !important;
+    right: 0;
+    top: 0;
+}
+
+.list-header {
+    padding-top: 13px;
+}
+
+.list-tags {
+    padding-top: 9px;
     clear: both;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.list-created {
+    padding-bottom: 13px;
 }
 
 .orderReversed {

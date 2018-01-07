@@ -87,43 +87,49 @@ var angularApp = angular.module('ngApp', [
         $scope.$route = $route;
         $rootScope.audioData = {};
 
-        var element = document.getElementById("widget");
+        var element = document.getElementById("widgetPlayer");
         var newElement = "";
 
         $scope.$watch("audioData", function() {
             $scope.audio = $rootScope.audioData || {};
             var audio = document.getElementById('audioPlayer');
-            var source = document.getElementById('audioPlayerSource');
 
-            audio.pause();
-            audio.style.visibility = "hidden";
+            if(audio !== null) {
+                audio.pause();
+                audio.style.visibility = "hidden";
+            }
+
             element.innerHTML = "";
+            if(typeof($rootScope.audioData.type) !=="undefined") {
+                if($rootScope.audioData.type[0] === "SoundCloud"){
+                    newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?auto_play=true&url=https://api.soundcloud.com/tracks/' + $rootScope.audioData.trackId + '"></iframe>';
+                    element.innerHTML = newElement;
+                } else if($rootScope.audioData.type[0] === "MixCloud"){
+                    newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $rootScope.audioData.trackId + '" frameborder="0"></iframe>';
+                    element.innerHTML = newElement;
+                } else if($rootScope.audioData.type[0] === "remote"){
+                    audio = document.getElementById('audioPlayer');
 
-            if($rootScope.audioData.type[0] === "SoundCloud"){
-                newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?auto_play=true&url=https://api.soundcloud.com/tracks/' + $rootScope.audioData.trackId + '"></iframe>';
-                element.innerHTML = newElement;
-            } else if($rootScope.audioData.type[0] === "MixCloud"){
-                newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $rootScope.audioData.trackId + '" frameborder="0"></iframe>';
-                element.innerHTML = newElement;
-            } else if($rootScope.audioData.type[0] === "remote"){
+                    if(audio !== null) {
+                        var source = document.getElementById('audioPlayerSource');
 
-                source.src = $rootScope.audioData.trackUrl;
+                        source.src = $rootScope.audioData.trackUrl;
 
-                audio.volume=0.5;
-                audio.load(); //call this to just preload the audio without playing
-                audio.play(); //call this to play the song right away
-                audio.style.visibility = "visible";
+                        audio.load(); //call this to just preload the audio without playing
+                        audio.play(); //call this to play the song right away
+                        audio.style.visibility = "visible";
+                    }
+                } else if($rootScope.audioData.type[0] === "local") {
+                    audio = document.getElementById('audioPlayer');
+                    if(audio !== null) {
+                        var source = document.getElementById('audioPlayerSource');
+                        source.src = "http://" + window.location.host + $rootScope.audioData.trackUrl;
 
-            } else if($rootScope.audioData.type[0] === "local") {
-                var audio = document.getElementById('audioPlayer');
-
-                var source = document.getElementById('audioPlayerSource');
-                source.src = "http://" + window.location.host + $rootScope.audioData.trackUrl;
-
-                audio.volume = 0.8;
-                audio.load(); //call this to just preload the audio without playing
-                audio.play(); //call this to play the song right away
-                audio.style.visibility = "visible";
+                        audio.load(); //call this to just preload the audio without playing
+                        audio.play(); //call this to play the song right away
+                        audio.style.visibility = "visible";
+                    }
+                }
             }
         });
 
