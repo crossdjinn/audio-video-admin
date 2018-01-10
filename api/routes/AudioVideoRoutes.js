@@ -2,6 +2,7 @@
 module.exports = function(app) {
     var fs = require('fs'),
         audio = require('../controllers/AudioController'),
+        setting = require('../controllers/SettingController'),
         soundcloud = require('../controllers/SoundCloudController'),
         availableRoutes = require('express-list-endpoints'),
         id3 = require('id3js'),
@@ -59,6 +60,15 @@ module.exports = function(app) {
                 routes: availableRoutes(app)
             })
     });
+
+    app.route('/api/setting')
+        .get(setting.all)
+        .post(setting.create);
+
+    app.route('/api/setting/:id')
+        .get(setting.read)
+        .put(setting.update)
+        .delete(setting.delete);
 
     app.route('/api/audio')
         .get(audio.all)

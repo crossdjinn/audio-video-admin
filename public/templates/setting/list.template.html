@@ -1,0 +1,16 @@
+<div class="container-fluid" ng-controller="settingListController">
+    <div class="row">
+        <md-card>
+            <md-list ng-cloak>
+                <md-list-item ng-repeat="setting in settings" ng-click="click(setting)">
+                    <p> {{ setting.name }} - {{setting.dataType[0]}}</p>
+                    <span ng-if="setting.dataType[0] === 'integer'">{{setting.valueInteger}}</span>
+                    <span ng-if="setting.dataType[0] === 'string'">{{setting.valueString}}</span>
+                    <span ng-if="setting.dataType[0] === 'boolean'">{{setting.valueBoolean}}</span>
+
+                </md-list-item>
+
+            </md-list>
+        </md-card>
+    </div>
+</div>

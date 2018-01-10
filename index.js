@@ -8,6 +8,7 @@ var express = require('express'),
     cookie = require('cookie'),
     mongoose = require('mongoose'),
     Audio = require('./api/models/AudioModel'),
+    Setting = require('./api/models/SettingModel'),
     bodyParser = require('body-parser'),
     session = require("express-session")({
         secret: "my-secret",

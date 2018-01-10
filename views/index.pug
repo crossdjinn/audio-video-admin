@@ -44,11 +44,19 @@ html(lang="en")
         script(src="/scripts/audio/new.module.js")
         script(src="/scripts/audio/new.component.js")
 
+        script(src="/scripts/setting/list.module.js")
+        script(src="/scripts/setting/list.component.js")
+        script(src="/scripts/setting/detail.module.js")
+        script(src="/scripts/setting/detail.component.js")
+        script(src="/scripts/setting/new.module.js")
+        script(src="/scripts/setting/new.component.js")
+
+
         script(src="//cdn.headwayapp.co/widget.js")
         script(type="text/javascript", src="//w.soundcloud.com/player/api.js")
 
     body(onload="bodyLoaded();", ng-app="ngApp")
-        a(href="/#!/audio/new", ng-controller="MenuCtrl")
+        //a(href="/#!/audio/new", ng-controller="MenuCtrl")
             md-button.md-accent.md-fab.md-fab-bottom-right(ng-hide="$route.current.activetab === 'audioNew'")
                 i.material-icons create
 
@@ -73,6 +81,15 @@ html(lang="en")
                                             p(layout-padding) New
                                     a(href="#!/audio/list")
                                         md-list-item(ng-class="{activeTab: $route.current.activetab === 'audioList'}")
+                                            i.material-icons format_list_numbered
+                                            p(layout-padding) All
+                                md-subheader.md-no-sticky Settings
+                                    a(href="#!/settings/new")
+                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'settingNew'}")
+                                            i.material-icons create
+                                            p(layout-padding) New
+                                    a(href="#!/settings/")
+                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'settingList'}")
                                             i.material-icons format_list_numbered
                                             p(layout-padding) All
                                 md-list-item

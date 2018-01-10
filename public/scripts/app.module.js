@@ -1,29 +1,30 @@
 var angularApp = angular.module('ngApp', [
-    'ngRoute',
-    'ngResource',
-    'ngCookies',
-    'ngMaterial',
-    'ngMessages',
-    'angularMoment',
-    'angular-loading-bar',
-    'audioList',
-    'audioDetail',
-    'audioNew',
-    'home'
-])
+        'ngRoute',
+        'ngResource',
+        'ngCookies',
+        'ngMaterial',
+        'ngMessages',
+        'angularMoment',
+        'angular-loading-bar',
+        'audioList',
+        'audioDetail',
+        'audioNew',
+        'settingList',
+        'settingDetail',
+        'settingNew',
+        'home'
+    ])
     .factory('audioPlayer', function() {
+        // make t izi look 3x data common...
+        var data = {};
 
-        // private variable
-        var _dataObj = {};
-
-        // public API
         return {
-            data: _dataObj
+            data: data
         };
     })
     .filter('startFrom', function() {
         return function(input, start) {
-            start = +start; //parse to int
+            start = +start;
             return input.slice(start);
         }
     })
@@ -51,7 +52,19 @@ var angularApp = angular.module('ngApp', [
                 'delete': {method:'DELETE'}
             });
         }
-])
+    ])
+    .factory('Setting', ['$resource',
+        function($resource) {
+            return $resource('/api/setting/:id', {id: '@_id'}, {
+                'query':  {method:'GET', isArray:true},
+                'get':    {method:'GET'},
+                'update': {method:'PUT'},
+                'save':   {method:'POST'},
+                'remove': {method:'DELETE'},
+                'delete': {method:'DELETE'}
+            });
+        }
+    ])
     .factory('SoundCloud', ['$resource',
         function($resource) {
             return $resource('/api/soundcloud', {
@@ -59,7 +72,7 @@ var angularApp = angular.module('ngApp', [
 
             });
         }
-])
+    ])
     .controller('AppCtrl', function ($scope, $timeout, $mdSidenav) {
         $scope.toggleLeft = buildToggler('left');
         $scope.toggleRight = buildToggler('right');
@@ -72,7 +85,6 @@ var angularApp = angular.module('ngApp', [
         }
 
         $scope.close = function () {
-            // Component lookup should always be available since we are not using `ng-if`
             $mdSidenav('left').close();
         };
         $scope.href = function (location) {
@@ -100,6 +112,7 @@ var angularApp = angular.module('ngApp', [
             }
 
             element.innerHTML = "";
+
             if(typeof($rootScope.audioData.type) !=="undefined") {
                 if($rootScope.audioData.type[0] === "SoundCloud"){
                     newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?auto_play=true&url=https://api.soundcloud.com/tracks/' + $rootScope.audioData.trackId + '"></iframe>';
@@ -115,9 +128,26 @@ var angularApp = angular.module('ngApp', [
 
                         source.src = $rootScope.audioData.trackUrl;
 
-                        audio.load(); //call this to just preload the audio without playing
-                        audio.play(); //call this to play the song right away
+                        //dark side
+                        var vol = 0;
+                        var interval = 1333;
+
+                        audio.volume = vol;
+
+                        audio.load();
+                        audio.play();
                         audio.style.visibility = "visible";
+
+                        var fadeIn = setInterval(
+                            function() {
+                                if (vol < 0.9) {
+                                    audio.volume = (vol += 0.05);
+                                }
+                                else {
+                                    clearInterval(fadeIn);
+                                }
+                            },
+                        interval);
                     }
                 } else if($rootScope.audioData.type[0] === "local") {
                     audio = document.getElementById('audioPlayer');
@@ -125,14 +155,30 @@ var angularApp = angular.module('ngApp', [
                         var source = document.getElementById('audioPlayerSource');
                         source.src = "http://" + window.location.host + $rootScope.audioData.trackUrl;
 
-                        audio.load(); //call this to just preload the audio without playing
-                        audio.play(); //call this to play the song right away
+                        var vol = 0;
+                        var interval = 1000;
+
+                        audio.volume = vol;
+
+                        audio.load();
+                        audio.play();
                         audio.style.visibility = "visible";
+
+                        //dark side
+                        var fadeIn = setInterval(
+                            function() {
+                                if (vol < 1) {
+                                    audio.volume = (vol += 0.05);
+                                }
+                                else {
+                                    clearInterval(fadeIn);
+                                }
+                            },
+                        interval);
                     }
                 }
             }
         });
-
 })
     .config(function($mdThemingProvider) {
 

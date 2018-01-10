@@ -22,6 +22,20 @@ config(['$locationProvider', '$routeProvider',
             template: '<audio-detail></audio-detail>',
             activename: 'Edit audio'
         }).
+        when('/settings', {
+            template: '<setting-list></setting-list>',
+            activetab: 'settingList',
+            activename: 'Settings'
+        }).
+        when('/settings/new', {
+            template: '<setting-new></setting-new>',
+            activetab: 'settingNew',
+            activename: 'Settings new'
+        }).
+        when('/settings/:id', {
+            template: '<setting-detail></setting-detail>',
+            activename: 'Settings edit'
+        }).
         otherwise('/');
     }
 ]);
