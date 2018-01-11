@@ -5,7 +5,8 @@ module.exports = function(app) {
         setting = require('../controllers/SettingController'),
         soundcloud = require('../controllers/SoundCloudController'),
         availableRoutes = require('express-list-endpoints'),
-        id3 = require('id3js'),
+        backup = require('mongodb-backup'),
+        restore = require('mongodb-restore'),
         config;
 
     // TODO: separate logic of home
@@ -20,6 +21,55 @@ module.exports = function(app) {
                     name: config.name,
                     version: config.version
             })
+        });
+    });
+
+    app.post('/backup', function(req, res) {
+        var file = req.files.file;
+
+        if (!req.files)
+            return res.status(400).send('No files were uploaded.');
+
+        var spaceFree = file.name.replace(/\s/g, '');
+
+        file.mv('backup/' + spaceFree, function(err) {
+            if (err)
+                return res.status(500).send(err);
+
+            backup({
+                uri: "mongodb://localhost/AVdb",
+                root: __dirname,
+                tar: '../../backup/autoSafe.tar',
+                callback: function(err) {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        restore({
+                            uri: 'mongodb://localhost/AVdb',
+                            root: __dirname, // read tar file from this dir
+                            dropCollections: true,
+                            tar: '../../backup/' + spaceFree,
+                            callback: function(err) {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    return res.status(200).send('finish');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        })
+    });
+
+    app.get('/backup', function(req, res) {
+        res.writeHead(200, {
+            'Content-Type': 'application/x-tar' // force header for tar download
+        });
+        backup({
+            uri: "mongodb://localhost/AVdb",
+            stream: res
         });
     });
 

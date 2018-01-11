@@ -188,18 +188,10 @@ md-toolbar.md-toolbar-sm {
 .selectdemoSelectHeader md-content._md {
     max-height: 240px; }
 
-
-
-
-
-
-
-
 .menu-list a, .menu-list a:hover, .menu-list a:active, .menu-list a:focus{
     text-decoration: none;
     cursor: pointer;
 }
-
 
 .listdemoListControls md-divider {
     margin-top: 0;
@@ -220,8 +212,6 @@ md-toolbar.md-toolbar-sm {
     /* IE 10+ */
     user-select: none;
     /* Likely future */ }
-
-
 
 /*!
  * angular-loading-bar v0.9.0

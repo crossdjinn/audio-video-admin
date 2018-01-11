@@ -1,6 +1,6 @@
 {
   "name": "audio-video-admin",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Audio/Video admin editor web app, suits up in Material Design.",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,10 @@
     "fs": "0.0.1-security",
     "geoip-lite": "^1.2.1",
     "http": "0.0.0",
+    "mongodb-backup": "^1.6.9",
+    "mongodb-restore": "^1.6.2",
     "mongoose": "^4.13.6",
+    "mv": "^2.1.1",
     "pug": "^2.0.0-rc.4",
     "socket.io": "^2.0.4"
   }

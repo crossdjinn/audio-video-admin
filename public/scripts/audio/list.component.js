@@ -117,14 +117,15 @@ angularApp.controller('audioListController',
               */
         };
 
-        $scope.searchUrl = function() {
+        $scope.change = function() {
+            $scope.currentPage = 0;
             $location.search("search", $scope.q);
+            console.log($scope.currentPage);
         };
 
         $scope.nextPage=function(){
             $scope.currentPage=$scope.currentPage+1;
             $scope.numberOfPages();
-
         };
 
         $scope.numberOfPages=function(){
