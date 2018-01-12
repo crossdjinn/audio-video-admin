@@ -70,33 +70,6 @@ html(lang="en")
                     md-content
                         div(flex)
                             md-list.menu-list(ng-controller="MenuCtrl" ng-click="toggleLeft()")
-                                a(href="#!/")
-                                    md-list-item(ng-class="{activeTab: $route.current.activetab === 'home'}")
-                                        i.material-icons open_in_new
-                                        p(layout-padding) API routes
-                                md-subheader.md-no-sticky Audio
-                                    a(href="#!/audio/new")
-                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'audioNew'}")
-                                            i.material-icons create
-                                            p(layout-padding) New
-                                    a(href="#!/audio/list")
-                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'audioList'}")
-                                            i.material-icons format_list_numbered
-                                            p(layout-padding) All
-                                md-subheader.md-no-sticky Settings
-                                    a(href="#!/settings/new")
-                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'settingNew'}")
-                                            i.material-icons create
-                                            p(layout-padding) New
-                                    a(href="#!/settings/")
-                                        md-list-item(ng-class="{activeTab: $route.current.activetab === 'settingList'}")
-                                            i.material-icons format_list_numbered
-                                            p(layout-padding) All
-                                md-list-item
-                                    i.material-icons cast_connected
-                                    p#connectCounter(layout-padding)
-                                div#users
-
                                 div(ng-show="audio.type[0] === 'local' || audio.type[0] === 'remote'")
                                     h4(layout-padding) {{audio.name}}
                                     audio#audioPlayer(ng-if="audio.name", controls="", autoplay="")
@@ -104,6 +77,19 @@ html(lang="en")
 
                                 div(layout="row", layout-align="center", id="widgetPlayer")
 
+                                md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'audioList'}" ng-href="#!/audio/list")
+                                    i.material-icons format_list_numbered
+                                    p(layout-padding) AV
+                                md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'settingList'}" ng-href="#!/settings/")
+                                        i.material-icons settings
+                                        p(layout-padding) Settings
+                                md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'home'}" ng-href="#!/")
+                                    i.material-icons open_in_new
+                                    p(layout-padding) API routes
+                                md-list-item
+                                    i.material-icons cast_connected
+                                    p#connectCounter(layout-padding)
+                                div#users
 
                 md-content(flex)
                     md-toolbar.md-theme-indigo.md-hue-2(md-whiteframe="5")

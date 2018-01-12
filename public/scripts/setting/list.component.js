@@ -1,5 +1,5 @@
 angularApp.controller('settingListController',
-    function settingListController($scope, Setting, $http, $mdToast, $mdDialog) {
+    function settingListController($scope, $location, Setting, $http, $mdToast, $mdDialog) {
         $scope.settings = Setting.query();
 
         $scope.settings.$promise.then(function(data) {
@@ -15,7 +15,7 @@ angularApp.controller('settingListController',
                 $mdDialog.cancel();
             };
 
-            $scope.generate = function(format) {
+            $scope.generate = function() {
                 $window.location = '/backup';
                 $mdDialog.hide();
                 $mdToast.show(
@@ -60,18 +60,38 @@ angularApp.controller('settingListController',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose:true
-            })
-                .then(function(answer) {
-                    //$scope.status = 'You said the information was "' + answer + '".';
-                }, function() {
-                    //'You cancelled the dialog.';
-                });
+            });
         };
 
-        $scope.click = function (setting) {
-            console.log(setting);
+        $scope.click = function(ev, setting) {
+            function InputStringController($scope, $mdDialog, Setting) {
+                $scope.setOld = Setting.get({id: setting._id}, function(data) {
+                    $scope.setOldData = data;
+                    $scope.inputName = $scope.setOldData.name;
+                    $scope.inputString = $scope.setOldData.valueString;
 
-            $scope.entry = Setting.get({id: setting._id}, function(data) {
+                    $scope.changeString = function() {
+                        $scope.setOld.name = $scope.inputName;
+                        $scope.setOld.valueString = $scope.inputString;
+
+                        $scope.setOld.$update(function() {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent("saved")
+                                    .position("bottom right")
+                                    .hideDelay(1000)
+                            );
+                        });
+                    };
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+                });
+            }
+
+
+            $scope.entry = Setting.get({id: setting._id}, function() {
                 if(setting.dataType[0] === "boolean"){
                     if(setting.valueBoolean === true){
                         setting.valueBoolean = false;
@@ -90,15 +110,25 @@ angularApp.controller('settingListController',
                         );
                     });
 
+                } else if(setting.dataType[0] === "string"){
+                    $mdDialog.show({
+                        controller: InputStringController,
+                        templateUrl: '/templates/setting/inputStringDialog.template.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose:true
+                    })
+                    .then(function(answer) {
+                        //$scope.status = 'You said the information was "' + answer + '".';
+                    }, function() {
+                        //'You cancelled the dialog.';
+                        $location.path('/');
+                        $location.path('/settings/');
+                    });
                 }
-
-
             });
-
-
         };
-
-}).
-component('settingList', {
-    templateUrl: '/templates/setting/list.template.html'
+    })
+    .component('settingList', {
+        templateUrl: '/templates/setting/list.template.html'
 });

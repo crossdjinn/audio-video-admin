@@ -3,12 +3,16 @@
         <md-card>
             <md-list ng-cloak>
                 <div flex style="text-align: center">
-                    <md-button class=" md-raised md-icon-button" ng-click="showBackUpCentre($event)">
+                    <md-button class="md-raised md-icon-button" ng-href="#!/settings/new">
+                        <i class="material-icons">add</i>
+                    </md-button>
+                    <md-button class="md-raised md-icon-button" ng-click="showBackUpCentre($event)">
                         <i class="material-icons">save</i>
                     </md-button>
                 </div>
 
-                <md-list-item style="margin-top: 9px" ng-repeat="setting in settings" ng-click="click(setting)">
+
+                <md-list-item style="margin-top: 9px" ng-repeat="setting in settings" ng-click="click($event, setting)">
                     <p> {{ setting.name }} - {{setting.dataType[0]}}</p>
                     <span ng-if="setting.dataType[0] === 'integer'">{{setting.valueInteger}}</span>
                     <span ng-if="setting.dataType[0] === 'string'">{{setting.valueString}}</span>

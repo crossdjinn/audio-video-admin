@@ -1,0 +1,24 @@
+<md-dialog aria-label="inputString">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>string</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <i class="material-icons">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content layout-padding="" style="padding: 9px">
+            <md-input-container style="width: 100%; margin-top: 33px;" md-no-float class="md-block">
+                <label>Name</label>
+                <input ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputName" ng-model="inputName" placeholder="Name"/>
+            </md-input-container>
+            <md-input-container style="width: 100%; margin-bottom: 0;">
+                <label>string</label>
+                <input ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputString" ng-model="inputString"/>
+            </md-input-container>
+        </md-dialog-content>
+    </form>
+</md-dialog>

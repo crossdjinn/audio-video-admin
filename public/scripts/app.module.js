@@ -87,9 +87,15 @@ var angularApp = angular.module('ngApp', [
             }
         }
     })
-    .controller('AppCtrl', function ($scope, $timeout, $mdSidenav) {
+    .controller('AppCtrl', function ($scope, $timeout, $mdSidenav, Setting, $mdTheming) {
         $scope.toggleLeft = buildToggler('left');
         $scope.toggleRight = buildToggler('right');
+
+        $mdTheming.generateTheme('altTheme');
+
+        Setting.get({id: "5a56ddbfc8156d442fc43d53"}, function(data) {
+            console.log(data)
+        });
 
 
         function buildToggler(componentId) {
@@ -195,6 +201,19 @@ var angularApp = angular.module('ngApp', [
         });
 })
     .config(function($mdThemingProvider) {
+
+        console.log($mdThemingProvider);
+        $mdThemingProvider.alwaysWatchTheme(true);
+
+        $mdThemingProvider.theme('default')
+            .dark();
+
+        //themes are still defined in config, but the css is not generated
+        $mdThemingProvider.theme('altTheme')
+            .primaryPalette('indigo');
+
+
+
 
         // Configure a dark theme with primary foreground yellow
         //$mdThemingProvider.theme('docs-dark', 'default').dark();
