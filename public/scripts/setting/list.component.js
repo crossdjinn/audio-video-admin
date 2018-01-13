@@ -64,6 +64,50 @@ angularApp.controller('settingListController',
         };
 
         $scope.click = function(ev, setting) {
+            function InputBooleanController($scope, $mdDialog, Setting) {
+                $scope.setOld = Setting.get({id: setting._id}, function(data) {
+                    $scope.setOldData = data;
+                    $scope.inputName = $scope.setOldData.name;
+                    $scope.inputBoolean = $scope.setOldData.valueBoolean[0];
+
+                    $scope.changeString = function() {
+                        if(setting.inputBoolean === true){
+                            setting.inputBoolean = false;
+                        } else {
+                            setting.inputBoolean = true;
+                        }
+
+                        $scope.setOld.valueBoolean = $scope.inputBoolean;
+
+                        $scope.setOld.$update(function() {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent("saved")
+                                    .position("bottom right")
+                                    .hideDelay(1000)
+                            );
+                        });
+                    };
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.delete = function() {
+                        $scope.setOld.$delete(function() {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent("deleted")
+                                    .position("bottom right")
+                                    .hideDelay(3000)
+                            );
+                            $scope.cancel();
+                        });
+
+                    };
+                });
+            }
+
             function InputStringController($scope, $mdDialog, Setting) {
                 $scope.setOld = Setting.get({id: setting._id}, function(data) {
                     $scope.setOldData = data;
@@ -87,29 +131,77 @@ angularApp.controller('settingListController',
                     $scope.cancel = function () {
                         $mdDialog.cancel();
                     };
+
+                    $scope.delete = function() {
+                        $scope.setOld.$delete(function() {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent("deleted")
+                                    .position("bottom right")
+                                    .hideDelay(3000)
+                            );
+                            $scope.cancel();
+                        });
+
+                    };
                 });
             }
 
+            function InputIntegerController($scope, $mdDialog, Setting) {
+                $scope.setOld = Setting.get({id: setting._id}, function(data) {
+                    $scope.setOldData = data;
+                    $scope.inputName = $scope.setOldData.name;
+                    $scope.inputInteger = $scope.setOldData.valueInteger[0];
+
+                    $scope.changeString = function() {
+                        $scope.setOld.name = $scope.inputName;
+                        $scope.setOld.valueInteger = $scope.inputInteger;
+
+                        $scope.setOld.$update(function() {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent("saved")
+                                    .position("bottom right")
+                                    .hideDelay(1000)
+                            );
+                        });
+                    };
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.delete = function() {
+                        $scope.setOld.$delete(function() {
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent("deleted")
+                                    .position("bottom right")
+                                    .hideDelay(3000)
+                            );
+                            $scope.cancel();
+                        });
+
+                    };
+                });
+            }
 
             $scope.entry = Setting.get({id: setting._id}, function() {
                 if(setting.dataType[0] === "boolean"){
-                    if(setting.valueBoolean === true){
-                        setting.valueBoolean = false;
-                    } else {
-                        setting.valueBoolean = true;
-                    }
-
-                    $scope.entry.valueBoolean = setting.valueBoolean;
-
-                    $scope.entry.$update(function() {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .textContent("Setting " + setting.name + " saved")
-                                .position("bottom right")
-                                .hideDelay(3333)
-                        );
-                    });
-
+                    $mdDialog.show({
+                        controller: InputBooleanController,
+                        templateUrl: '/templates/setting/inputBooleanDialog.template.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose:true
+                    })
+                        .then(function(answer) {
+                            //$scope.status = 'You said the information was "' + answer + '".';
+                        }, function() {
+                            //'You cancelled the dialog.';
+                            $location.path('/');
+                            $location.path('/settings/');
+                        });
                 } else if(setting.dataType[0] === "string"){
                     $mdDialog.show({
                         controller: InputStringController,
@@ -125,6 +217,21 @@ angularApp.controller('settingListController',
                         $location.path('/');
                         $location.path('/settings/');
                     });
+                } else if(setting.dataType[0] === "integer"){
+                    $mdDialog.show({
+                        controller: InputIntegerController,
+                        templateUrl: '/templates/setting/inputIntegerDialog.template.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose:true
+                    })
+                        .then(function(answer) {
+                            //$scope.status = 'You said the information was "' + answer + '".';
+                        }, function() {
+                            //'You cancelled the dialog.';
+                            $location.path('/');
+                            $location.path('/settings/');
+                        });
                 }
             });
         };

@@ -1,8 +1,8 @@
-<md-dialog aria-label="inputString">
+<md-dialog aria-label="inputInteger">
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>string</h2>
+                <h2>integer</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <i class="material-icons">close</i>
@@ -16,8 +16,8 @@
                 <input ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputName" ng-model="inputName" placeholder="Name"/>
             </md-input-container>
             <md-input-container style="width: 100%; margin-bottom: 0;">
-                <label>string</label>
-                <input ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputString" ng-model="inputString"/>
+                <label>integer</label>
+                <input type="number" ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputInteger" ng-model="inputInteger"/>
             </md-input-container>
         </md-dialog-content>
 
@@ -27,6 +27,5 @@
             </md-button>
             <span flex></span>
         </md-dialog-actions>
-
     </form>
 </md-dialog>

@@ -1,8 +1,8 @@
-<md-dialog aria-label="inputString">
+<md-dialog aria-label="inputBoolean">
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>string</h2>
+                <h2>boolean</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <i class="material-icons">close</i>
@@ -15,10 +15,10 @@
                 <label>Name</label>
                 <input ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputName" ng-model="inputName" placeholder="Name"/>
             </md-input-container>
-            <md-input-container style="width: 100%; margin-bottom: 0;">
-                <label>string</label>
-                <input ng-model-options="{ allowInvalid: true, debounce: 1000 }" ng-change="changeString()" id="inputString" ng-model="inputString"/>
-            </md-input-container>
+            <md-switch aria-label="switchBoolean" ng-change="changeString()" id="inputBoolean" ng-model="inputBoolean">
+                {{ inputBoolean }}
+            </md-switch>
+
         </md-dialog-content>
 
         <md-dialog-actions  style="padding: 8px; padding-bottom: 0">
@@ -27,6 +27,5 @@
             </md-button>
             <span flex></span>
         </md-dialog-actions>
-
     </form>
 </md-dialog>
