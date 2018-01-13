@@ -1,12 +1,14 @@
 <div class="container-fluid" ng-controller="settingListController">
+    <md-button class="setting-fab-button md-accent md-fab md-fab-bottom-right" ng-click="newSetting($event)">
+        <i class="material-icons">add</i>
+    </md-button>
+
+
     <div class="row">
         <md-card>
             <md-list ng-cloak>
                 <div flex style="text-align: center">
-                    <md-button class="md-raised md-icon-button" ng-href="#!/settings/new">
-                        <i class="material-icons">add</i>
-                    </md-button>
-                    <md-button class="md-raised md-icon-button" ng-click="showBackUpCentre($event)">
+                    <md-button class="md-raised md-primary md-icon-button" ng-click="showBackUpCentre($event)">
                         <i class="material-icons">save</i>
                     </md-button>
                 </div>

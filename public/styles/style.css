@@ -87,6 +87,10 @@ md-list {
     padding: 0;
 }
 
+.setting-fab-button {
+    position: fixed !important;
+}
+
 
 .list-buttons button, .list-buttons a {
     margin: 0 !important;

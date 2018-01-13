@@ -56,10 +56,6 @@ html(lang="en")
         script(type="text/javascript", src="//w.soundcloud.com/player/api.js")
 
     body(onload="bodyLoaded();", ng-app="ngApp")
-        //a(href="/#!/audio/new", ng-controller="MenuCtrl")
-            md-button.md-accent.md-fab.md-fab-bottom-right(ng-hide="$route.current.activetab === 'audioNew'")
-                i.material-icons create
-
         div(ng-controller="AppCtrl", layout="column", ng-cloak, style="height: 100%")
             section(layout="row", flex)
                 md-sidenav.md-sidenav-left(md-component-id="left", md-whiteframe="5", md-is-locked-open="$mdMedia('gt-sm')", md-swipe-left="toggleLeft()")
@@ -78,14 +74,14 @@ html(lang="en")
                                 div(layout="row", layout-align="center", id="widgetPlayer")
 
                                 md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'audioList'}" ng-href="#!/audio/list")
-                                    i.material-icons format_list_numbered
-                                    p(layout-padding) AV
+                                    i.material-icons library_music
+                                    p(layout-padding) AV Library
                                 md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'settingList'}" ng-href="#!/settings/")
                                         i.material-icons settings
                                         p(layout-padding) Settings
                                 md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'home'}" ng-href="#!/")
                                     i.material-icons open_in_new
-                                    p(layout-padding) API routes
+                                    p(layout-padding) Routes
                                 md-list-item
                                     i.material-icons cast_connected
                                     p#connectCounter(layout-padding)

@@ -1,4 +1,10 @@
 <div class="container-fluid" ng-controller="audioListController">
+    <a href="#!/audio/new">
+        <md-button class="md-accent md-fab md-fab-bottom-right" style="position: fixed !important;">
+            <i class="material-icons">create</i>
+        </md-button>
+    </a>
+
     <div class="row">
         <md-card>
             <md-card-content style="padding-bottom: 0">
@@ -39,7 +45,7 @@
                 <md-list-item class="md-3-line" ng-repeat="audio in audios | orderObjectBy:orderItem:orderReversed | startFrom:currentPage*pageSize | filter:q | limitTo:pageSize" ng-click="playerUrl(audio)">
                     <div class="md-list-item-text" layout="column">
                         <div class="list-buttons">
-                            <md-button ng-href="/#!/audio/{{audio._id}}">edit</md-button>
+                            <md-button class="md-accent" ng-href="/#!/audio/{{audio._id}}">edit</md-button>
                         </div>
                         <h3 class="list-header">
                             <img width="25" ng-if="audio.type[0] === 'SoundCloud'" src="/img/icons/soundcloud.png"/>

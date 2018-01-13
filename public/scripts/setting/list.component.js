@@ -6,6 +6,32 @@ angularApp.controller('settingListController',
             $scope.settings = data;
         });
 
+        function newSettingController($scope, $mdDialog, $mdToast, $http, $routeParams, $element, Setting) {
+            $scope.data = new Setting();
+            $scope.data.dataType = "string";
+            $scope.data.valueBoolean = false;
+
+            $scope.add = function() {
+                $scope.data.$save(function() {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent("Setting " + $scope.data.name + " added")
+                            .position("bottom right")
+                            .hideDelay(3333)
+                    );
+                    $scope.answer();
+                });
+            };
+
+            $scope.answer = function(answer) {
+                $mdDialog.hide(answer);
+            };
+
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+        }
+
         function BackUpController($scope, $http, $mdDialog, $mdToast, $window) {
             $scope.hide = function() {
                 $mdDialog.hide();
@@ -43,15 +69,26 @@ angularApp.controller('settingListController',
                             .hideDelay(3333)
                     );
                 });
-
-
-
             };
 
             $scope.answer = function(answer) {
                 $mdDialog.hide(answer);
             };
         }
+
+        $scope.newSetting = function(ev) {
+            $mdDialog.show({
+                controller: newSettingController,
+                templateUrl: '/templates/setting/new.template.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true
+            }).then(function(answer) {
+                $location.path('/');
+                $location.path('/settings/');
+            }, function() {
+            });
+        };
 
         $scope.showBackUpCentre = function(ev) {
             $mdDialog.show({

@@ -115,9 +115,10 @@ var angularApp = angular.module('ngApp', [
             }
         };
 })
-    .controller('MenuCtrl', function($scope, $route, $rootScope) {
+    .controller('MenuCtrl', function($scope, $rootScope, $route) {
         $scope.$route = $route;
         $rootScope.audioData = {};
+        $rootScope.showNewButton = false;
 
         var element = document.getElementById("widgetPlayer");
         var newElement = "";

@@ -1,47 +1,41 @@
-<div class="container-fluid" ng-controller="settingNewController">
-    <div class="row">
-        <md-card>
-            <form name="newSetting" ng-submit="add()">
-                <md-card-content>
-                    <div layout="row">
-                        <md-input-container>
-                            <label>Name</label>
-                            <input required ng-model="data.name"/>
-                        </md-input-container>
-                    </div>
+<div style="margin-top: 9px" layout-padding="">
+    <form ng-submit="add()">
+        <div layout="row">
+            <md-input-container style="width: 100%">
+                <label>Name</label>
+                <input required ng-model="data.name"/>
+            </md-input-container>
+        </div>
 
-                    <div layout="row">
-                        <md-radio-group ng-model="data.dataType">
-                            <md-radio-button value="integer">Integer</md-radio-button>
-                            <md-radio-button value="string" class="md-primary">String</md-radio-button>
-                            <md-radio-button value="boolean">Boolean</md-radio-button>
-                        </md-radio-group>
-                    </div>
-                    <div layout="row">
+        <div layout="row">
+            <md-radio-group ng-model="data.dataType">
+                <md-radio-button value="integer">Integer</md-radio-button>
+                <md-radio-button value="string" class="md-primary">String</md-radio-button>
+                <md-radio-button value="boolean">Boolean</md-radio-button>
+            </md-radio-group>
+        </div>
+        <div layout="row">
 
 
-                    </div>
+        </div>
 {{entry.genres}}
-                    <div layout="row">
-                        <md-input-container style="width: 100%" ng-if="data.dataType === 'integer'">
-                            <label>Integer</label>
-                            <input type="number" required ng-model="data.valueInteger"/>
-                        </md-input-container>
-                        <md-input-container style="width: 100%" ng-if="data.dataType === 'string'">
-                            <label>String</label>
-                            <input required ng-model="data.valueString"/>
-                        </md-input-container>
-                        <md-switch ng-model="data.valueBoolean" aria-label="Boolean" ng-if="data.dataType === 'boolean'">
-                            {{ data.valueBoolean }}
-                        </md-switch>
-                    </div>
+        <div layout="row">
+            <md-input-container style="width: 100%" ng-if="data.dataType === 'integer'">
+                <label>Integer</label>
+                <input type="number" required ng-model="data.valueInteger"/>
+            </md-input-container>
+            <md-input-container style="width: 100%" ng-if="data.dataType === 'string'">
+                <label>String</label>
+                <input required ng-model="data.valueString"/>
+            </md-input-container>
+            <md-switch ng-model="data.valueBoolean" aria-label="Boolean" ng-if="data.dataType === 'boolean'">
+                {{ data.valueBoolean }}
+            </md-switch>
+        </div>
 
-                    <div layout="row" style="width: 100%;text-align: right">
-                        <md-button class="md-raised" type="submit">Add</md-button>
-                    </div>
-                </md-card-content>
-            </form>
-
-        </md-card>
-    </div>
+        <div layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-primary" type="submit">Add</md-button>
+        </div>
+    </form>
 </div>
