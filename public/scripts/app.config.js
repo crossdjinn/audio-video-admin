@@ -7,20 +7,20 @@ config(['$locationProvider', '$routeProvider',
             activetab: 'home',
             activename: 'API routes'
         }).
-        when('/audio/new', {
-            template: '<audio-new></audio-new>',
-            activetab: 'audioNew',
-            activename: 'New audio'
+        when('/av/new', {
+            template: '<media-new></media-new>',
+            activetab: 'mediaNew',
+            activename: 'New AV'
         }).
-        when('/audio/list', {
-            template: '<audio-list></audio-list>',
-            activetab: 'audioList',
+        when('/av/list', {
+            template: '<media-list></media-list>',
+            activetab: 'mediaList',
             activename: 'Audio & Video',
             reloadOnSearch : false
         }).
-        when('/audio/:id', {
-            template: '<audio-detail></audio-detail>',
-            activename: 'Edit audio'
+        when('/av/:id', {
+            template: '<media-detail></media-detail>',
+            activename: 'Edit AV'
         }).
         when('/settings', {
             template: '<setting-list></setting-list>',

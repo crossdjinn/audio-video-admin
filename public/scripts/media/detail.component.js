@@ -1,5 +1,5 @@
-angularApp.controller('audioDetailController',
-    function audioDetailController($scope, $routeParams, $mdToast, $mdDialog, $http, Audio) {
+angularApp.controller('mediaDetailController',
+    function mediaDetailController($scope, $routeParams, $mdToast, $mdDialog, $http, Audio) {
         $scope.genres = [
             "8bit",
             "Ambient",
@@ -305,6 +305,6 @@ angularApp.controller('audioDetailController',
             });
         };
 }).
-component('audioDetail', {
-    templateUrl: '/templates/audio/detail.template.html'
+component('mediaDetail', {
+    templateUrl: '/templates/media/detail.template.html'
 });

@@ -30,9 +30,21 @@ var AudioSchema = new Schema({
     type: {
         type: [{
             type: String,
-            enum: ['local', 'remote', 'SoundCloud', 'MixCloud']
+            enum: ['audio', 'video']
         }],
-        default: ['local']
+        default: ['audio']
+    },
+    audioType: {
+        type: [{
+            type: String,
+            enum: ['local', 'remote', 'SoundCloud', 'MixCloud']
+        }]
+    },
+    videoType: {
+        type: [{
+            type: String,
+            enum: ['local', 'remote', 'YouTube']
+        }]
     }
 });
 

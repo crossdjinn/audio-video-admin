@@ -8,6 +8,24 @@ var HW_config = {
     account:  "xDRnrJ"
 };
 
+console.log(Cookies.get('SCtime'));
+
+
+function beforeLeave(){
+    var soundScloudIframe = document.getElementById("soundScloudIframe");
+
+    var widget1 = SC.Widget(soundScloudIframe);
+
+    widget1.getPosition(function (time) {
+        Cookies.set('SCtime', time);
+    })
+}
+
+window.onunload = function() {
+    beforeLeave();
+};
+
+
 if(result.cpu.architecture === undefined || result.cpu.architecture === null){
     result.cpu.architecture = result.os.version;
 }

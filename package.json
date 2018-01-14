@@ -1,6 +1,6 @@
 {
   "name": "audio-video-admin",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "description": "Audio/Video admin editor web app, suits up in Material Design.",
   "main": "index.js",
   "scripts": {

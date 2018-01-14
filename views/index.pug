@@ -11,6 +11,9 @@ html(lang="en")
         script(src="/bower_components/socket.io-client/dist/socket.io.slim.js")
         script(src="/bower_components/jquery/dist/jquery.min.js")
 
+        script(type="text/javascript", src="//w.soundcloud.com/player/api.js")
+        script(type="text/javascript", src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js")
+
 
         script(src="/bower_components/angular/angular.min.js")
         script(src="/bower_components/angular-route/angular-route.min.js")
@@ -37,12 +40,12 @@ html(lang="en")
         script(src="/scripts/home/module.js")
         script(src="/scripts/home/component.js")
 
-        script(src="/scripts/audio/list.module.js")
-        script(src="/scripts/audio/list.component.js")
-        script(src="/scripts/audio/detail.module.js")
-        script(src="/scripts/audio/detail.component.js")
-        script(src="/scripts/audio/new.module.js")
-        script(src="/scripts/audio/new.component.js")
+        script(src="/scripts/media/list.module.js")
+        script(src="/scripts/media/list.component.js")
+        script(src="/scripts/media/detail.module.js")
+        script(src="/scripts/media/detail.component.js")
+        script(src="/scripts/media/new.module.js")
+        script(src="/scripts/media/new.component.js")
 
         script(src="/scripts/setting/list.module.js")
         script(src="/scripts/setting/list.component.js")
@@ -53,32 +56,31 @@ html(lang="en")
 
 
         script(src="//cdn.headwayapp.co/widget.js")
-        script(type="text/javascript", src="//w.soundcloud.com/player/api.js")
 
     body(onload="bodyLoaded();", ng-app="ngApp")
         div(ng-controller="AppCtrl", layout="column", ng-cloak, style="height: 100%")
             section(layout="row", flex)
                 md-sidenav.md-sidenav-left(md-component-id="left", md-whiteframe="5", md-is-locked-open="$mdMedia('gt-sm')", md-swipe-left="toggleLeft()")
-                    md-toolbar.md-theme-indigo.md-hue-2
-                        a(href="https://github.com/crossdjinn/audio-video-admin/", style="color:white")
-                            h1.md-toolbar-tools=" v" + version
+                    md-toolbar.md-theme-indigo.md-hue-2(ng-controller="MenuCtrl")
+                        h1.md-toolbar-tools(ng-if="audio.audioType[0] === 'local' || audio.audioType[0] === 'remote'") {{audio.name}}
+                        h1.md-toolbar-tools(ng-if="audio.audioType[0] === 'SoundCloud'") SoundCloud
+                        h1.md-toolbar-tools(ng-if="audio.audioType[0] === 'MixCloud'") MixCloud
 
                     md-content
                         div(flex)
-                            md-list.menu-list(ng-controller="MenuCtrl" ng-click="toggleLeft()")
+                            md-list.menu-list(ng-controller="MenuCtrl" ng-click="toggleLeft()", style="padding: 0")
                                 div(ng-show="audio.type[0] === 'local' || audio.type[0] === 'remote'")
-                                    h4(layout-padding) {{audio.name}}
                                     audio#audioPlayer(ng-if="audio.name", controls="", autoplay="")
                                         source#audioPlayerSource
 
                                 div(layout="row", layout-align="center", id="widgetPlayer")
 
-                                md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'audioList'}" ng-href="#!/audio/list")
-                                    i.material-icons library_music
-                                    p(layout-padding) AV Library
+                                md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'mediaList'}" ng-href="#!/av/list")
+                                    i.material-icons playlist_play
+                                    p(layout-padding) Multimedia
                                 md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'settingList'}" ng-href="#!/settings/")
                                         i.material-icons settings
-                                        p(layout-padding) Settings
+                                        p(layout-padding)="Settings v" + version
                                 md-list-item.menu-list-item(ng-class="{activeTab: $route.current.activetab === 'home'}" ng-href="#!/")
                                     i.material-icons open_in_new
                                     p(layout-padding) Routes
@@ -86,6 +88,8 @@ html(lang="en")
                                     i.material-icons cast_connected
                                     p#connectCounter(layout-padding)
                                 div#users
+
+                                md-button(ng-click="getPosition()") position
 
                 md-content(flex)
                     md-toolbar.md-theme-indigo.md-hue-2(md-whiteframe="5")

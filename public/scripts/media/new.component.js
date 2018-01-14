@@ -1,5 +1,5 @@
-angularApp.controller('audioNewController',
-    function audioNewController($scope, $mdToast, $http, $routeParams, $element, Audio) {
+angularApp.controller('mediaNewController',
+    function mediaNewController($scope, $mdToast, $http, $routeParams, $element, Audio) {
         $scope.genres = [
             "8bit",
             "Ambient",
@@ -70,7 +70,20 @@ angularApp.controller('audioNewController',
 
         $scope.getWidget = function() {
 
-            if($scope.entry.type === "SoundCloud"){
+            if($scope.entry.videoType === "YouTube"){
+
+                var str = $scope.entry.trackUrl;
+                $scope.entry.trackId = str.split("https://www.youtube.com/watch?v=").pop();
+
+
+                var element = document.getElementById("ytplayer");
+                var newElement = '<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/'+$scope.entry.trackId+'?autoplay=1" frameborder="0"></iframe>';
+
+                element.insertAdjacentHTML('afterend', newElement);
+
+
+
+            } else if($scope.entry.audioType === "SoundCloud"){
                 $http.post("/api/soundcloud/", {'soundcloudURL': $scope.entry.trackUrl}).then(function (data, status, headers, config) {
                     $scope.entry.trackId = data.data.trackID;
 
@@ -86,7 +99,7 @@ angularApp.controller('audioNewController',
                             .hideDelay(3000)
                     );
                 });
-            } else if($scope.entry.type === "MixCloud"){
+            } else if($scope.entry.audioType === "MixCloud"){
 
 
                 var str = $scope.entry.trackUrl;
@@ -97,7 +110,7 @@ angularApp.controller('audioNewController',
                 var newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $scope.entry.trackId + '" frameborder="0"></iframe>';
 
                 element.insertAdjacentHTML('afterend', newElement);
-            } else if($scope.entry.type === "remote"){
+            } else if($scope.entry.audioType === "remote"){
                 var audio = document.getElementById('audio');
 
                 var source = document.getElementById('audioSource');
@@ -108,7 +121,7 @@ angularApp.controller('audioNewController',
                 audio.play(); //call this to play the song right away
                 audio.style.visibility = "visible";
 
-            } else if($scope.entry.type === "local"){
+            } else if($scope.entry.audioType === "local"){
                 var audio = document.getElementById('audio');
 
                 var source = document.getElementById('audioSource');
@@ -136,6 +149,6 @@ angularApp.controller('audioNewController',
             });
         };
 }).
-component('audioNew', {
-    templateUrl: '/templates/audio/new.template.html'
+component('mediaNew', {
+    templateUrl: '/templates/media/new.template.html'
 });

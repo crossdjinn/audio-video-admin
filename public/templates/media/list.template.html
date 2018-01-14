@@ -1,5 +1,5 @@
-<div class="container-fluid" ng-controller="audioListController">
-    <a href="#!/audio/new">
+<div class="container-fluid" ng-controller="mediaListController">
+    <a href="#!/av/new">
         <md-button class="md-accent md-fab md-fab-bottom-right" style="position: fixed !important;">
             <i class="material-icons">create</i>
         </md-button>
@@ -22,14 +22,8 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-input-container style="margin-bottom: 0;">
-                        <label>Page {{currentPage+1}}/{{numberOfPages()}}</label>
-                        <md-select ng-change="numberOfPages()" ng-model="pageSize" id="pageSize" placeholder="Page {{currentPage+1}}/{{numberOfPages()}}">
-                            <md-option value="4" selected>4</md-option>
-                            <md-option value="15">15</md-option>
-                            <md-option value="30">30</md-option>
-                            <md-option value="100">100</md-option>
-                        </md-select>
+                    <md-input-container style="width: 50px" class="md-block">
+                        <input type="number" ng-model="pageSize" ng-change="resetPage()" placeholder="list" id="pageSize">
                     </md-input-container>
                 </div>
             </md-card-content>
@@ -38,20 +32,20 @@
             <md-list style="padding: 0">
                 <div layout="row" flex layout-align="center">
                     <md-button style="width: 100%" ng-hide="currentPage === 0" ng-click="currentPage=currentPage-1">
-                        Previous
+                        {{currentPage+1}}/{{numberOfPages()}}
                     </md-button>
                 </div>
                 <md-divider ng-hide="currentPage === 0"></md-divider>
                 <md-list-item class="md-3-line" ng-repeat="audio in audios | orderObjectBy:orderItem:orderReversed | startFrom:currentPage*pageSize | filter:q | limitTo:pageSize" ng-click="playerUrl(audio)">
                     <div class="md-list-item-text" layout="column">
                         <div class="list-buttons">
-                            <md-button class="md-accent" ng-href="/#!/audio/{{audio._id}}">edit</md-button>
+                            <md-button class="md-accent" ng-href="/#!/av/{{audio._id}}">edit</md-button>
                         </div>
                         <h3 class="list-header">
-                            <img width="25" ng-if="audio.type[0] === 'SoundCloud'" src="/img/icons/soundcloud.png"/>
-                            <img width="25" class="mixCloudIcon" ng-if="audio.type[0] === 'MixCloud'" src="/img/icons/mixcloud.png"/>
-                            <img width="25" class="remoteIcon" ng-if="audio.type[0] === 'remote'" src="/img/icons/remote.png"/>
-                            <img width="25" class="localIcon" ng-if="audio.type[0] === 'local'" src="/img/icons/local.png"/>
+                            <img width="25" ng-if="audio.audioType[0] === 'SoundCloud'" src="/img/icons/soundcloud.png"/>
+                            <img width="25" class="mixCloudIcon" ng-if="audio.audioType[0] === 'MixCloud'" src="/img/icons/mixcloud.png"/>
+                            <img width="25" class="remoteIcon" ng-if="audio.audioType[0] === 'remote'" src="/img/icons/remote.png"/>
+                            <img width="25" class="localIcon" ng-if="audio.audioType[0] === 'local'" src="/img/icons/local.png"/>
                             {{ audio.name }}</h3>
                         <p class="list-tags"><i ng-repeat="gen in audio.genres">{{gen}} </i></p>
                         <p class="list-created" am-time-ago="audio.Created_date"></p>
@@ -61,7 +55,7 @@
                 <md-divider ng-hide="currentPage === (numberOfPagesTotal-1)"></md-divider>
                 <div layout="row" flex layout-align="center">
                     <md-button style="width: 100%" ng-hide="currentPage === (numberOfPagesTotal-1)" ng-click="nextPage()">
-                        Next
+                            {{currentPage+1}}/{{numberOfPages()}}
                     </md-button>
                 </div>
             </md-list>

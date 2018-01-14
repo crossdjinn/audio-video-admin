@@ -1,5 +1,5 @@
-angularApp.controller('audioListController',
-    function audioListController($scope, Audio, $cookies, $filter, $element, $routeParams, $location, $rootScope, $mdDialog) {
+angularApp.controller('mediaListController',
+    function mediaListController($scope, Audio, $cookies, $filter, $element, $routeParams, $location, $rootScope, $mdDialog) {
         $scope.audios = Audio.query();
 
         $scope.audios.$promise.then(function(data) {
@@ -80,9 +80,7 @@ angularApp.controller('audioListController',
         });
 
         $scope.orderChange = function() {
-            if($scope.orderReversed){
-                $scope.orderReversed = false;
-            } else {
+            if($scope.orderReversed) $scope.orderReversed = false; else {
                 $scope.orderReversed = true;
             }
         };
@@ -128,8 +126,12 @@ angularApp.controller('audioListController',
             $scope.numberOfPages();
         };
 
-        $scope.numberOfPages=function(){
+        $scope.numberOfPages = function() {
             return $scope.numberOfPagesTotal = Math.ceil($scope.getData().length/$scope.pageSize);
+        };
+
+        $scope.resetPage = function () {
+            $scope.currentPage = 0;
         };
 
         //$scope.cookie = $cookies.getAll();
@@ -140,13 +142,13 @@ angularApp.controller('audioListController',
         };
 
         $scope.new = function() {
-            window.location.href = ' #/audio/new';
+            window.location.href = ' #/av/new';
         };
 
 
 
 
 }).
-component('audioList', {
-    templateUrl: '/templates/audio/list.template.html'
+component('mediaList', {
+    templateUrl: '/templates/media/list.template.html'
 });

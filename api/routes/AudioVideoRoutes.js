@@ -92,7 +92,7 @@ module.exports = function(app) {
 
 
                 res.writeHead(301,
-                    {Location: 'http://localhost:3000/#!/audio/new?url=' + '/uploads/' + spaceFree}
+                    {Location: 'http://localhost:3000/#!/av/new?url=' + '/uploads/' + spaceFree}
                 );
                 res.end();
 
@@ -120,11 +120,11 @@ module.exports = function(app) {
         .put(setting.update)
         .delete(setting.delete);
 
-    app.route('/api/audio')
+    app.route('/api/av')
         .get(audio.all)
         .post(audio.create);
 
-    app.route('/api/audio/:id')
+    app.route('/api/av/:id')
         .get(audio.read)
         .put(audio.update)
         .delete(audio.delete);

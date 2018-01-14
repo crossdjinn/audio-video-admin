@@ -6,9 +6,9 @@ var angularApp = angular.module('ngApp', [
         'ngMessages',
         'angularMoment',
         'angular-loading-bar',
-        'audioList',
-        'audioDetail',
-        'audioNew',
+        'mediaList',
+        'mediaDetail',
+        'mediaNew',
         'settingList',
         'settingDetail',
         'settingNew',
@@ -43,7 +43,7 @@ var angularApp = angular.module('ngApp', [
     })
     .factory('Audio', ['$resource',
         function($resource) {
-            return $resource('/api/audio/:id', {id: '@_id'}, {
+            return $resource('/api/av/:id', {id: '@_id'}, {
                 'query':  {method:'GET', isArray:true},
                 'get':    {method:'GET'},
                 'update': {method:'PUT'},
@@ -120,8 +120,16 @@ var angularApp = angular.module('ngApp', [
         $rootScope.audioData = {};
         $rootScope.showNewButton = false;
 
+
         var element = document.getElementById("widgetPlayer");
         var newElement = "";
+
+
+
+        $scope.getPosition = function() {
+
+
+        };
 
         $scope.$watch("audioData", function() {
             $scope.audio = $rootScope.audioData || {};
@@ -134,14 +142,17 @@ var angularApp = angular.module('ngApp', [
 
             element.innerHTML = "";
 
-            if(typeof($rootScope.audioData.type) !=="undefined") {
-                if($rootScope.audioData.type[0] === "SoundCloud"){
-                    newElement = '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?auto_play=true&url=https://api.soundcloud.com/tracks/' + $rootScope.audioData.trackId + '"></iframe>';
+            if(typeof($rootScope.audioData.audioType) !=="undefined") {
+                if($rootScope.audioData.videoType[0] === "YouTube"){
+                    newElement = '<iframe id="YouTube" type="text/html" src="https://www.youtube.com/embed/'+$rootScope.audioData.trackId+'?autoplay=1" frameborder="0"></iframe>';
                     element.innerHTML = newElement;
-                } else if($rootScope.audioData.type[0] === "MixCloud"){
+                } else if($rootScope.audioData.audioType[0] === "SoundCloud"){
+                    newElement = '<iframe width="100%" id="soundScloudIframe"height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?auto_play=true&url=https://api.soundcloud.com/tracks/' + $rootScope.audioData.trackId + '"></iframe>';
+                    element.innerHTML = newElement;
+                } else if($rootScope.audioData.audioType[0] === "MixCloud"){
                     newElement = '<iframe width="100%" height="120" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=' + $rootScope.audioData.trackId + '" frameborder="0"></iframe>';
                     element.innerHTML = newElement;
-                } else if($rootScope.audioData.type[0] === "remote"){
+                } else if($rootScope.audioData.audioType[0] === "remote"){
                     audio = document.getElementById('audioPlayer');
 
                     if(audio !== null) {
@@ -170,7 +181,7 @@ var angularApp = angular.module('ngApp', [
                             },
                         interval);
                     }
-                } else if($rootScope.audioData.type[0] === "local") {
+                } else if($rootScope.audioData.audioType[0] === "local") {
                     audio = document.getElementById('audioPlayer');
                     if(audio !== null) {
                         var source = document.getElementById('audioPlayerSource');
@@ -212,8 +223,6 @@ var angularApp = angular.module('ngApp', [
         //themes are still defined in config, but the css is not generated
         $mdThemingProvider.theme('altTheme')
             .primaryPalette('indigo');
-
-
 
 
         // Configure a dark theme with primary foreground yellow

@@ -70,6 +70,11 @@ a, a:hover, a:visited, a:link, a:active, md-list {
     width: 100%;
 }
 
+#YouTube {
+    width: 100%;
+    height: 180px;
+}
+
 #audio {
     visibility: hidden;
     width: 100%;
