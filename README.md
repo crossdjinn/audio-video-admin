@@ -1,2 +1,5 @@
-# audio-video-admin
-Audio/Video admin editor web app, suits up in Material Design.
+# DEPRECATED | audio-video-admin
+
+__will be moved to:__ [https://github.com/crossdjinn/av-dream-sdk](https://github.com/crossdjinn/av-dream-sdk)
+
+Audio/Video admin web app, suits up in Material Design.
